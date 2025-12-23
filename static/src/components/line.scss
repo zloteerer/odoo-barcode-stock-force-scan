@@ -1,0 +1,57 @@
+// Stock Barcode Force Scan - Line Styles
+
+.o_barcode_client_action .o_barcode_lines .o_barcode_line {
+    background-color: var(--bg, white);
+
+    .o_scan_required_badge {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.85em;
+        margin-top: 5px;
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+
+        i {
+            font-size: 1.1em;
+        }
+    }
+
+    &.o_selected {
+        box-shadow: inset 0 0 0 3px var(--border) !important;
+        --bg: #e6f2f3;
+        --border: #017e84;
+    }
+
+    &.o_line_completed {
+        background-color: var(--bg, white);
+        --bg: #eaf6ec;
+
+        &.o_selected {
+            --border: #28a745;
+        }
+    }
+
+    .o_line_button {
+        &[disabled] {
+            background-color: gray;
+            border-color: gray;
+            cursor: not-allowed !important;
+            pointer-events: none;
+        }
+        &[disabled]:hover {
+            background-color: gray;
+            border-color: gray;
+        }
+    }
+}
+
+// Make completed lines with scan more visible
+.o_barcode_line.o_line_completed {
+    &:not(.o_line_not_scanned) {
+        border-left-color: #28a745; // Green border for completed & scanned
+    }
+}

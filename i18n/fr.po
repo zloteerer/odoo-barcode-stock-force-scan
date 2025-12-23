@@ -1,0 +1,86 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_barcode_force_scan
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20240924\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-23 18:18+0000\n"
+"PO-Revision-Date: 2025-12-23 18:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/components/line.xml:0
+#: code:addons/stock_barcode_force_scan/static/src/components/line.xml:0
+#, python-format
+msgid "!line.barcode_scanned || (qtyDone >= qtyDemand && qtyDemand > 0)"
+msgstr "!line.barcode_scanned || (qtyDone >= qtyDemand && qtyDemand > 0)"
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid ""
+"A product tracked by serial numbers can't have multiple quantities for the "
+"same serial number."
+msgstr "Un produit ne peut pas avoir plusieurs quantités pour le même numéro de série."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid "Cannot add more than the expected quantity for this product."
+msgstr "Impossible d'ajouter plus que la quantité prévue pour ce produit."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid ""
+"Cannot create a new line. This product must first be scanned to be added."
+msgstr "Impossible de créer une nouvelle ligne. Ce produit doit d'abord être scanné pour être ajouté."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid ""
+"Cannot process this product. This product is not in the expected lines."
+msgstr "Impossible de traiter ce produit. Ce produit ne figure pas dans les lignes attendues."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid "The scanned serial number is already used."
+msgstr "Le numéro de série scanné est déjà utilisé."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid ""
+"You are expected to scan one or more products or a package available at the "
+"picking location"
+msgstr "Vous devez scanner un ou plusieurs produits ou un colis disponible à l'emplacement d'origine."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/models/barcode_model.js:0
+#, python-format
+msgid "You are expected to scan one or more products."
+msgstr "Vous devez scanner un ou plusieurs produits."
+
+#. module: stock_barcode_force_scan
+#. openerp-web
+#: code:addons/stock_barcode_force_scan/static/src/components/line.xml:0
+#, python-format
+msgid "qtyDone <= 0 || qtyDone == '?'"
+msgstr "qtyDone <= 0 || qtyDone == '?'"

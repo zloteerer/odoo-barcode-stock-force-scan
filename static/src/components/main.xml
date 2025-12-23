@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="stock_barcode_force_scan.MainComponent" t-inherit="stock_barcode.MainComponent" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button[hasclass('o_add_line')]" position="attributes">
+            <attribute name="class" separator=" " add="d-none" />
+        </xpath>
+    </t>
+
+</templates>
