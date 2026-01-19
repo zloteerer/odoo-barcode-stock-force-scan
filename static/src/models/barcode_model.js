@@ -350,15 +350,6 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
                 }
                 await this.updateLine(currentLine, fieldsParams);
             }
-        } else if (this.canCreateNewLine) {
-            // CUSTOM: Block creation of new lines for products not in expected lines
-            this.trigger("play-sound", "error");
-            return this.notification.add(
-                _t(
-                    "Cannot create a new line. This product must first be scanned to be added.",
-                ),
-                { type: "danger" },
-            );
         }
 
         // And finally, if the scanned barcode modified a line, selects this line.

@@ -28,10 +28,14 @@ patch(
          */
         _createLinesState() {
             const lines = this._super(...arguments);
-            // Mark all lines as not scanned initially, require scan to modify
+            // Mark all lines as scanned by default to allow quantity modifications without scanning
             lines.forEach((line) => {
                 if (line.barcode_scanned === undefined) {
-                    line.barcode_scanned = false;
+                    line.barcode_scanned = true;
+                }
+                // Mark lines that were in the original demand (expected lines)
+                if (line.is_initial_demand_line === undefined) {
+                    line.is_initial_demand_line = line.product_uom_qty > 0;
                 }
                 // Mark lines that were in the original demand (expected lines)
                 if (line.is_initial_demand_line === undefined) {

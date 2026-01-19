@@ -4,11 +4,11 @@
     <t t-name="stock_barcode_force_scan.LineComponent" t-inherit="stock_barcode.LineComponent" t-inherit-mode="extension" owl="1">
 
         <xpath expr="//button[hasclass('o_edit')]" position="attributes">
-            <attribute name="t-att-disabled">!line.barcode_scanned || (qtyDone &gt;= qtyDemand &amp;&amp; qtyDemand &gt; 0)</attribute>
+            <attribute name="t-att-disabled">qtyDone &gt;= qtyDemand &amp;&amp; qtyDemand &gt; 0</attribute>
         </xpath>
 
         <xpath expr="//button[@name='incrementButton']" position="attributes">
-            <attribute name="t-att-disabled">!line.barcode_scanned || (qtyDone &gt;= qtyDemand &amp;&amp; qtyDemand &gt; 0)</attribute>
+            <attribute name="t-att-disabled">qtyDone &gt;= qtyDemand &amp;&amp; qtyDemand &gt; 0</attribute>
         </xpath>
 
         <xpath expr="//button[@name='decrementButton']" position="attributes">
