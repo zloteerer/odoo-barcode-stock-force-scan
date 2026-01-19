@@ -13,7 +13,6 @@ patch(LineComponent.prototype, "stock_barcode_force_scan.LineComponent", {
 
     /**
      * Override to hide increment button if not scanned
-     * Cette méthode est appelée par le template original pour décider d'afficher le bouton
      */
     get getDisplayIncrementBtn() {
         // Si pas scanné, ne pas afficher le bouton
@@ -37,14 +36,13 @@ patch(LineComponent.prototype, "stock_barcode_force_scan.LineComponent", {
     },
 
     /**
-     * Override to block manual quantity changes before scan
-     * Cette méthode est appelée quand on clique sur +1 ou -1
+     * Override to block manual quantity changes before scan with custom message
      */
     addQuantity(quantity, ev) {
         if (!this.isScanned) {
             this.env.model.notification.add(
-                "Vous devez d'abord scanner le code-barre du produit avant de modifier la quantité manuellement.",
-                { type: "warning" }
+                this.env._t("To change the quantity, first scan the product barcode."),
+                { type: "warning" },
             );
             ev.stopPropagation();
             ev.preventDefault();

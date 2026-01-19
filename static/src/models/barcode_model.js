@@ -37,7 +37,7 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
                 // record that can't be found because of the filters
                 const lot = await this.cache.getRecordByBarcode(
                     barcode,
-                    "stock.production.lot"
+                    "stock.production.lot",
                 );
                 if (lot) {
                     Object.assign(barcodeData, { lot, match: true });
@@ -56,14 +56,14 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
         if (barcodeData.packaging) {
             Object.assign(
                 barcodeData,
-                this._retrievePackagingData(barcodeData.packaging)
+                this._retrievePackagingData(barcodeData.packaging),
             );
         }
 
         if (barcodeData.lot && !barcodeData.product) {
             Object.assign(
                 barcodeData,
-                this._retrieveTrackingNumberInfo(barcodeData.lot)
+                this._retrieveTrackingNumberInfo(barcodeData.lot),
             );
         }
 
@@ -130,12 +130,12 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
             if (barcodeData.packaging) {
                 Object.assign(
                     barcodeData,
-                    this._retrievePackagingData(barcodeData.packaging)
+                    this._retrievePackagingData(barcodeData.packaging),
                 );
             } else if (barcodeData.lot) {
                 Object.assign(
                     barcodeData,
-                    this._retrieveTrackingNumberInfo(barcodeData.lot)
+                    this._retrieveTrackingNumberInfo(barcodeData.lot),
                 );
             }
             if (barcodeData.product) {
@@ -152,11 +152,11 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
             if (!barcodeData.error) {
                 if (this.groups.group_tracking_lot) {
                     barcodeData.error = _t(
-                        "You are expected to scan one or more products or a package available at the picking location"
+                        "You are expected to scan one or more products or a package available at the picking location",
                     );
                 } else {
                     barcodeData.error = _t(
-                        "You are expected to scan one or more products."
+                        "You are expected to scan one or more products.",
                     );
                 }
             }
@@ -166,20 +166,30 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
             });
         }
 
-        // CUSTOM: Check if product is in expected lines
-        const expectedLine = this.currentState.lines.find(
-            (line) =>
-                line.product_id.id === product.id && line.product_uom_qty > 0
+        // CUSTOM: Check if product is in expected lines OR already exists in current lines (manually added)
+        // First, check if the product already exists in the current lines (including manually added products)
+        const existingLine = this.currentState.lines.find(
+            (line) => line.product_id.id === product.id,
         );
-        if (!expectedLine) {
-            this.trigger("play-sound", "error");
-            return this.notification.add(
-                _t(
-                    "Cannot process this product. This product is not in the expected lines."
-                ),
-                { type: "danger" }
+
+        // If the product doesn't exist at all in the lines, check if it's an expected product
+        if (!existingLine) {
+            const expectedLine = this.currentState.lines.find(
+                (line) =>
+                    line.product_id.id === product.id &&
+                    line.product_uom_qty > 0,
             );
+            if (!expectedLine) {
+                this.trigger("play-sound", "error");
+                return this.notification.add(
+                    _t(
+                        "Cannot process this product. This product is not in the expected lines.",
+                    ),
+                    { type: "danger" },
+                );
+            }
         }
+        // If existingLine is found, allow the scan (product was manually added or is expected)
 
         if (barcodeData.lot && barcodeData.lot.product_id !== product.id) {
             delete barcodeData.lot; // The product was scanned alongside another product's lot.
@@ -222,9 +232,9 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
                 barcodeData.quantity = 1;
                 this.notification.add(
                     _t(
-                        `A product tracked by serial numbers can't have multiple quantities for the same serial number.`
+                        `A product tracked by serial numbers can't have multiple quantities for the same serial number.`,
                     ),
-                    { type: "danger" }
+                    { type: "danger" },
                 );
             }
         }
@@ -241,7 +251,7 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
                     this.trigger("play-sound", "error");
                     return this.notification.add(
                         _t("The scanned serial number is already used."),
-                        { type: "danger" }
+                        { type: "danger" },
                     );
                 }
             }
@@ -269,19 +279,19 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
                         lot_id: lotId,
                         lot_name: (!lotId && barcodeData.lotName) || false,
                         context: { location_id: currentLine.location_id },
-                    }
+                    },
                 );
                 this.cache.setCache(res.records);
                 if (prefilledPackage && res.quant && res.quant.package_id) {
                     barcodeData.package = this.cache.getRecord(
                         "stock.quant.package",
-                        res.quant.package_id
+                        res.quant.package_id,
                     );
                 }
                 if (prefilledOwner && res.quant && res.quant.owner_id) {
                     barcodeData.owner = this.cache.getRecord(
                         "res.partner",
-                        res.quant.owner_id
+                        res.quant.owner_id,
                     );
                 }
             }
@@ -316,9 +326,9 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
                         this.trigger("play-sound", "error");
                         return this.notification.add(
                             _t(
-                                "Cannot add more than the expected quantity for this product."
+                                "Cannot add more than the expected quantity for this product.",
                             ),
-                            { type: "danger" }
+                            { type: "danger" },
                         );
                     }
                 }
@@ -345,9 +355,9 @@ patch(BarcodeModel.prototype, "stock_barcode_force_scan.BarcodeModel", {
             this.trigger("play-sound", "error");
             return this.notification.add(
                 _t(
-                    "Cannot create a new line. This product must first be scanned to be added."
+                    "Cannot create a new line. This product must first be scanned to be added.",
                 ),
-                { type: "danger" }
+                { type: "danger" },
             );
         }
 

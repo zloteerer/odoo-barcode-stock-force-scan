@@ -28,10 +28,14 @@ patch(
          */
         _createLinesState() {
             const lines = this._super(...arguments);
-            // Mark all lines as not scanned initially
+            // Mark all lines as not scanned initially, require scan to modify
             lines.forEach((line) => {
                 if (line.barcode_scanned === undefined) {
                     line.barcode_scanned = false;
+                }
+                // Mark lines that were in the original demand (expected lines)
+                if (line.is_initial_demand_line === undefined) {
+                    line.is_initial_demand_line = line.product_uom_qty > 0;
                 }
             });
             return lines;
@@ -39,6 +43,7 @@ patch(
 
         /**
          * Override to mark new lines as scanned when created via barcode
+         * Also check if a line with the same product exists and merge instead of creating new
          */
         async _createNewLine(params) {
             const newLine = await this._super(...arguments);
@@ -46,6 +51,8 @@ patch(
             if (newLine) {
                 // New lines created from barcode scanning should be marked as scanned
                 newLine.barcode_scanned = true;
+                // Mark as not being in initial demand (added product)
+                newLine.is_initial_demand_line = false;
             }
             return newLine;
         },
@@ -60,5 +67,5 @@ patch(
                 line.barcode_scanned = true;
             }
         },
-    }
+    },
 );

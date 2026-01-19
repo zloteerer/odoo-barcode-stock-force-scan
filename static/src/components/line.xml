@@ -15,6 +15,11 @@
             <attribute name="t-att-disabled">qtyDone &lt;= 0 || qtyDone == '?'</attribute>
         </xpath>
 
+        <!-- Ajouter la classe pour les produits ajoutés hors commande -->
+        <xpath expr="//div[hasclass('o_barcode_line')]" position="attributes">
+            <attribute name="t-att-class">{'o_added_product': !line.is_initial_demand_line}</attribute>
+        </xpath>
+
     </t>
 
 </templates>

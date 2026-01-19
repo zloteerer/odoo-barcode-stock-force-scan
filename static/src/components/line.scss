@@ -20,6 +20,11 @@
         }
     }
 
+    &.o_faulty {
+        background-color: #fff3cd !important;
+        --border: #ffc107 !important;
+    }
+
     &.o_selected {
         box-shadow: inset 0 0 0 3px var(--border) !important;
         --bg: #e6f2f3;
@@ -32,6 +37,16 @@
 
         &.o_selected {
             --border: #28a745;
+        }
+    }
+
+    // Style pour les produits ajoutés hors commande (non initialement dans la demande)
+    &.o_added_product {
+        background-color: var(--bg, white);
+        --bg: #fff3cd;
+
+        &.o_selected {
+            --border: #ffc107;
         }
     }
 
